@@ -1,6 +1,8 @@
 package ru.explead.two.logic;
 
 
+import java.util.Random;
+
 import ru.explead.two.app.App;
 
 /**
@@ -15,18 +17,44 @@ public class Field {
     private float widthCell;
 
 
-    private int[][] emptyField;
+    private int[][] field;
 
     public Field(int[][] emptyField) {
-        this.emptyField = emptyField;
+        this.field = emptyField;
         widthCell = App.getSizeSurface()/ emptyField.length;
+
+        newCell();
+        newCell();
+    }
+
+    /* Заполнить случайную ячейку числом 2 */
+    public void newCell()
+    {
+        Random rand = new Random();
+        int i, j;
+        do
+        {
+            i = rand.nextInt(field.length);
+            j = rand.nextInt(field.length);
+        } while (field[i][j] != 0);
+
+        field[i][j] = 2;
+    }
+
+
+    public int getValue(int x, int y) {
+        return field[x][y];
+    }
+
+    public int getSize() {
+        return field.length;
     }
 
     public float getWidthCell() {
         return widthCell;
     }
 
-    public int[][] getEmptyField() {
-        return emptyField;
+    public int[][] getField() {
+        return field;
     }
 }

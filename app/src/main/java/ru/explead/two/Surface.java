@@ -9,11 +9,8 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import ru.explead.features.app.App;
-import ru.explead.features.logic.ControllerOne;
-import ru.explead.features.logic.ControllerThree;
-import ru.explead.features.logic.ControllerTwo;
-import ru.explead.features.logic.Level;
+import ru.explead.two.app.App;
+import ru.explead.two.logic.Controller;
 
 
 public class Surface extends SurfaceView implements SurfaceHolder.Callback {
@@ -37,21 +34,13 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void init() {
-        this.setBackgroundColor(Color.TRANSPARENT);
-        this.setZOrderOnTop(true); //necessary
-        getHolder().setFormat(PixelFormat.TRANSPARENT);
+        this.setBackgroundColor(Color.BLUE);
         getHolder().addCallback(this);
     }
 
 
     protected void onDraw(Canvas canvas) {
-        if(App.getLevel().getComplexity() == Level.EASY) {
-            ((ControllerOne) App.getController()).onDraw(canvas);
-        } else if(App.getLevel().getComplexity() == Level.MEDIUM) {
-            ((ControllerTwo) App.getController()).onDraw(canvas);
-        } else if(App.getLevel().getComplexity() == Level.HARD) {
-            ((ControllerThree) App.getController()).onDraw(canvas);
-        }
+            ((Controller)App.getController()).onDraw(canvas);
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
