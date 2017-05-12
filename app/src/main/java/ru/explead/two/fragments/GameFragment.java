@@ -85,9 +85,11 @@ public class GameFragment extends Fragment {
 
                 TextView view = (TextView) layout.findViewById(R.id.cell);
                 view.setTextSize(getContext().getResources().getDimensionPixelSize(R.dimen.standard_text));
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.menu_blue));
                 int value = App.getController().getField().getValue(i, j);
-                if(value != 0) {
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.menu_blue));
+                if(value == 1) {
+                    view.setBackgroundColor(getContext().getResources().getColor(R.color.white));
+                } else if(value != 0) {
                     view.setText(Integer.toString(value));
                 }
                 view.setTextSize(28);

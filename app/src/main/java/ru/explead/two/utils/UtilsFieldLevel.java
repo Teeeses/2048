@@ -18,11 +18,11 @@ public class UtilsFieldLevel {
     private static void getLevelFromEasy(int level) {
         if (level == 1) {
             int[][] mass = new int[][]{
+                    {1, 1, 0, 1, 1},
+                    {1, 1, 0, 1, 1},
                     {0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0}
+                    {1, 1, 0, 1, 1},
+                    {1, 1, 0, 1, 1}
             };
             Field field = new Field(mass);
             App.getController().setField(field);

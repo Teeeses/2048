@@ -28,6 +28,8 @@ public class Controller {
     protected Level level;
     protected Field field;
 
+    private int score;
+
     protected Paint paintWall = new Paint();
 
 
@@ -38,6 +40,7 @@ public class Controller {
 
     public void startGame() {
         status = ACTIVE_GAME;
+        score = 0;
         level = App.getLevel();
         UtilsFieldLevel.getDataLevel(level.getLevel());
     }
@@ -83,6 +86,20 @@ public class Controller {
         }
         return true;
     }*/
+
+
+    public int score() {
+        int score = 0;
+        for(int i = 0; i < field.getSize(); i++) {
+            for(int j = 0; j < field.getSize(); j++) {
+                if(field.getValue(i, j) != 1) {
+                    score = score + field.getValue(i, j);
+                }
+            }
+        }
+        this.score = score;
+        return score;
+    }
 
     public void onMoveUp() {
         int[][] field = getField().getField();
