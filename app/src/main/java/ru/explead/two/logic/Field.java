@@ -17,9 +17,9 @@ public class Field {
     private float widthCell;
 
 
-    private int[][] field;
+    private Cell[][] field;
 
-    public Field(int[][] emptyField) {
+    public Field(Cell[][] emptyField) {
         this.field = emptyField;
         widthCell = App.getSizeSurface()/ emptyField.length;
 
@@ -36,14 +36,19 @@ public class Field {
         {
             i = rand.nextInt(field.length);
             j = rand.nextInt(field.length);
-        } while (field[i][j] != 0);
+        } while (field[i][j].getValue() != 0);
 
-        field[i][j] = 2;
+        field[i][j].setValue(2);
+        field[i][j].animationNewCell();
     }
 
 
-    public int getValue(int x, int y) {
+    public Cell getCell(int x, int y) {
         return field[x][y];
+    }
+
+    public int getValue(int x, int y) {
+        return field[x][y].getValue();
     }
 
     public int getSize() {
@@ -54,7 +59,7 @@ public class Field {
         return widthCell;
     }
 
-    public int[][] getField() {
+    public Cell[][] getField() {
         return field;
     }
 }

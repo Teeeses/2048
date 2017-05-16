@@ -12,10 +12,15 @@
     <color name="brown">#5d4037</color>
 
 
-    <color name="red">#ff0000</color>
-    <color name="dark_red">#BE2F33</color>
-    <color name="green">#00af00</color>
-    <color name="orange">#ef6820</color>
+    <color name="main">#b8b2a6</color>
+    <color name="empty_cell">#d5cdc0</color>
+    <color name="two_cell">#ece5d5</color>
+    <color name="four_cell">#ebe1c6</color>
+    <color name="eight_cell">#eeb17a</color>
+    <color name="sixteen_cell">#f59562</color>
+    <color name="thirty_two_cell">#f57e5c</color>
+
+    <color name="dark_text_cell">#797457</color>
 
     //Меню
 

@@ -1,6 +1,7 @@
 package ru.explead.two;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;

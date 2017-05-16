@@ -2,6 +2,7 @@ package ru.explead.two.utils;
 
 
 import ru.explead.two.app.App;
+import ru.explead.two.logic.Cell;
 import ru.explead.two.logic.Field;
 
 /**
@@ -17,12 +18,12 @@ public class UtilsFieldLevel {
 
     private static void getLevelFromEasy(int level) {
         if (level == 1) {
-            int[][] mass = new int[][]{
-                    {1, 1, 0, 1, 1},
-                    {1, 1, 0, 1, 1},
-                    {0, 0, 0, 0, 0},
-                    {1, 1, 0, 1, 1},
-                    {1, 1, 0, 1, 1}
+            App.setLenght(4);
+            Cell[][] mass = new Cell[][]{
+                    {new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
+                    {new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
+                    {new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
+                    {new Cell(0), new Cell(0), new Cell(0), new Cell(0)}
             };
             Field field = new Field(mass);
             App.getController().setField(field);

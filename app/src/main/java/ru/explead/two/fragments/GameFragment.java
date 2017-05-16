@@ -21,8 +21,10 @@ import android.widget.Toast;
 import ru.explead.two.R;
 import ru.explead.two.Surface;
 import ru.explead.two.app.App;
+import ru.explead.two.logic.Cell;
 import ru.explead.two.logic.Controller;
 import ru.explead.two.logic.Level;
+import ru.explead.two.utils.Utils;
 
 /**
  * Created by develop on 15.12.2016.
@@ -35,6 +37,7 @@ public class GameFragment extends Fragment {
     private LinearLayout field;
     private Surface surface;
 
+    private Cell[][] cells;
     private int widthField;
 
     @Override
@@ -61,17 +64,18 @@ public class GameFragment extends Fragment {
         params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
         field.setLayoutParams(params);
         field.setOrientation(LinearLayout.VERTICAL);
-        field.setBackgroundColor(Color.TRANSPARENT);
+        field.setBackgroundColor(getContext().getResources().getColor(R.color.main));
+        int margin = getContext().getResources().getDimensionPixelSize(R.dimen.radius);
+        field.setPadding(margin, margin, margin, margin);
 
         rootLayout.addView(field);
-
     }
 
 
     public void createTable() {
         field.removeAllViews();
         int number = App.getController().getField().getSize();
-        int size = (widthField)/number;
+        int size = (widthField - 2*getContext().getResources().getDimensionPixelSize(R.dimen.radius))/number;
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         for(int i = 0; i < number; i++) {
@@ -80,34 +84,12 @@ public class GameFragment extends Fragment {
             lay.setOrientation(LinearLayout.HORIZONTAL);
             lay.setLayoutParams(params);
             for(int j = 0; j < number; j++) {
-                RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.cell, null, false);
-                layout.setLayoutParams(new RelativeLayout.LayoutParams(size, size));
-
-                TextView view = (TextView) layout.findViewById(R.id.cell);
-                view.setTextSize(getContext().getResources().getDimensionPixelSize(R.dimen.standard_text));
-                int value = App.getController().getField().getValue(i, j);
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.menu_blue));
-                if(value == 1) {
-                    view.setBackgroundColor(getContext().getResources().getColor(R.color.white));
-                } else if(value != 0) {
-                    view.setText(Integer.toString(value));
-                }
-                view.setTextSize(28);
-                lay.addView(layout);
+                Cell[][] cells = App.getController().getField().getField();
+                //cells[i][j].createCell();
+                lay.addView(cells[i][j].getLayout());
             }
             field.addView(lay);
         }
-    }
-
-
-    public void createSurface(RelativeLayout rootLayout) {
-
-        surface = new Surface(getActivity());
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(App.getSizeSurface(), App.getSizeSurface());
-        params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        surface.setLayoutParams(params);
-
-        rootLayout.addView(surface);
     }
 
     public void startGame() {
@@ -131,7 +113,7 @@ public class GameFragment extends Fragment {
                             end_x = (int) event.getX();
                             end_y = (int) event.getY();
                             (App.getController()).logicMove(start_x, start_y, end_x, end_y);
-                            createTable();
+                            move();
                             break;
                         default:
                             break;
@@ -141,6 +123,24 @@ public class GameFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    public void move() {
+        Cell[][] cells = App.getController().getField().getField();
+        for(int i = 0; i < cells.length; i++) {
+            for(int j = 0; j < cells.length; j++) {
+                cells[i][j].update();
+            }
+        }
+
+        System.out.println("\n*******************************");
+        for(int i = 0; i < cells.length; i++) {
+            System.out.println();
+            for(int j = 0; j < cells.length; j++) {
+                cells[i][j].update();
+                System.out.print(Integer.toString(cells[i][j].getValue()) + " ");
+            }
+        }
     }
 
     public void onWin() {

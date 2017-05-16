@@ -102,34 +102,34 @@ public class Controller {
     }
 
     public void onMoveUp() {
-        int[][] field = getField().getField();
+        Cell[][] field = getField().getField();
         for(int j = 0; j < field.length; j++) {
             int count = 0;
             for(int i = 0; i < field.length; i++) {
-                if(field[i][j] != 0 && field[i][j] != 1) {
+                if(field[i][j].getValue() != 0 && field[i][j].getValue() != 1) {
                     if(i != count) {
-                        if(field[count][j] != 1) {
-                            if(field[count][j] == field[i][j]) {
-                                int value = field[i][j];
-                                field[i][j] = 0;
-                                field[count][j] = 2 * value;
+                        if(field[count][j].getValue() != 1) {
+                            if(field[count][j].getValue() == field[i][j].getValue()) {
+                                int value = field[i][j].getValue();
+                                field[i][j].setValue(0);
+                                field[count][j].setValue(2 * value);
                                 count++;
-                            } else if(field[count][j] < field[i][j]) {
-                                if(field[count][j] == 0) {
-                                    int value = field[i][j];
-                                    field[i][j] = 0;
-                                    field[count][j] = value;
+                            } else if(field[count][j].getValue() < field[i][j].getValue()) {
+                                if(field[count][j].getValue() == 0) {
+                                    int value = field[i][j].getValue();
+                                    field[i][j].setValue(0);
+                                    field[count][j].setValue(value);
                                 } else {
                                     count++;
-                                    int value = field[i][j];
-                                    field[i][j] = 0;
-                                    field[count][j] = value;
+                                    int value = field[i][j].getValue();
+                                    field[i][j].setValue(0);
+                                    field[count][j].setValue(value);
                                 }
-                            } else if(field[count][j] > field[i][j]) {
+                            } else if(field[count][j].getValue() > field[i][j].getValue()) {
                                 count++;
-                                int value = field[i][j];
-                                field[i][j] = 0;
-                                field[count][j] = value;
+                                int value = field[i][j].getValue();
+                                field[i][j].setValue(0);
+                                field[count][j].setValue(value);
                             }
                         }
                     }
@@ -141,34 +141,34 @@ public class Controller {
     }
 
     public void onMoveDown() {
-        int[][] field = getField().getField();
+        Cell[][] field = getField().getField();
         for(int j = 0; j < field.length; j++) {
             int count = field.length-1;
             for(int i = field.length-1; i >= 0; i--) {
-                if(field[i][j] != 0 && field[i][j] != 1) {
+                if(field[i][j].getValue() != 0 && field[i][j].getValue() != 1) {
                     if(i != count) {
-                        if(field[count][j] != 1) {
-                            if(field[count][j] == field[i][j]) {
-                                int value = field[i][j];
-                                field[i][j] = 0;
-                                field[count][j] = 2*value;
+                        if(field[count][j].getValue() != 1) {
+                            if(field[count][j].getValue() == field[i][j].getValue()) {
+                                int value = field[i][j].getValue();
+                                field[i][j].setValue(0);
+                                field[count][j].setValue(2*value);
                                 count--;
-                            } else if(field[count][j] < field[i][j]) {
-                                if(field[count][j] == 0) {
-                                    int value = field[i][j];
-                                    field[i][j] = 0;
-                                    field[count][j] = value;
+                            } else if(field[count][j].getValue() < field[i][j].getValue()) {
+                                if(field[count][j].getValue() == 0) {
+                                    int value = field[i][j].getValue();
+                                    field[i][j].setValue(0);
+                                    field[count][j].setValue(value);
                                 } else {
                                     count--;
-                                    int value = field[i][j];
-                                    field[i][j] = 0;
-                                    field[count][j] = value;
+                                    int value = field[i][j].getValue();
+                                    field[i][j].setValue(0);
+                                    field[count][j].setValue(value);
                                 }
-                            } else if(field[count][j] > field[i][j]) {
+                            } else if(field[count][j].getValue() > field[i][j].getValue()) {
                                 count--;
-                                int value = field[i][j];
-                                field[i][j] = 0;
-                                field[count][j] = value;
+                                int value = field[i][j].getValue();
+                                field[i][j].setValue(0);
+                                field[count][j].setValue(value);
                             }
                         }
                     }
@@ -180,34 +180,34 @@ public class Controller {
     }
 
     public void onMoveRight() {
-        int[][] field = getField().getField();
+        Cell[][] field = getField().getField();
         for(int i = 0; i < field.length; i++) {
             int count = field.length-1;
             for(int j = field.length-1; j >= 0; j--) {
-                if(field[i][j] != 0 && field[i][j] != 1) {
+                if(field[i][j].getValue() != 0 && field[i][j].getValue() != 1) {
                     if(j != count) {
-                        if(field[i][count] != 1) {
-                            if(field[i][count] == field[i][j]) {
-                                int value = field[i][j];
-                                field[i][j] = 0;
-                                field[i][count] = 2*value;
+                        if(field[i][count].getValue() != 1) {
+                            if(field[i][count].getValue() == field[i][j].getValue()) {
+                                int value = field[i][j].getValue();
+                                field[i][j].setValue(0);
+                                field[i][count].setValue(2*value);
                                 count--;
-                            } else if(field[i][count] < field[i][j]) {
-                                if(field[i][count] == 0) {
-                                    int value = field[i][j];
-                                    field[i][j] = 0;
-                                    field[i][count] = value;
+                            } else if(field[i][count].getValue() < field[i][j].getValue()) {
+                                if(field[i][count].getValue() == 0) {
+                                    int value = field[i][j].getValue();
+                                    field[i][j].setValue(0);
+                                    field[i][count].setValue(value);
                                 } else {
                                     count--;
-                                    int value = field[i][j];
-                                    field[i][j] = 0;
-                                    field[i][count] = value;
+                                    int value = field[i][j].getValue();
+                                    field[i][j].setValue(0);
+                                    field[i][count].setValue(value);
                                 }
-                            } else if(field[i][count] > field[i][j]) {
+                            } else if(field[i][count].getValue() > field[i][j].getValue()) {
                                 count--;
-                                int value = field[i][j];
-                                field[i][j] = 0;
-                                field[i][count] = value;
+                                int value = field[i][j].getValue();
+                                field[i][j].setValue(0);
+                                field[i][count].setValue(value);
                             }
                         }
                     }
@@ -219,34 +219,34 @@ public class Controller {
     }
 
     public void onMoveLeft() {
-        int[][] field = getField().getField();
+        Cell[][] field = getField().getField();
         for(int i = 0; i < field.length; i++) {
             int count = 0;
             for(int j = 0; j < field.length; j++) {
-                if(field[i][j] != 0 && field[i][j] != 1) {
+                if(field[i][j].getValue() != 0 && field[i][j].getValue() != 1) {
                     if(j != count) {
-                        if(field[i][count] != 1) {
-                            if(field[i][count] == field[i][j]) {
-                                int value = field[i][j];
-                                field[i][j] = 0;
-                                field[i][count] = 2 * value;
+                        if(field[i][count].getValue() != 1) {
+                            if(field[i][count].getValue() == field[i][j].getValue()) {
+                                int value = field[i][j].getValue();
+                                field[i][j].setValue(0);
+                                field[i][count].setValue(2 * value);
                                 count++;
-                            } else if(field[i][count] < field[i][j]) {
-                                if(field[i][count] == 0) {
-                                    int value = field[i][j];
-                                    field[i][j] = 0;
-                                    field[i][count] = value;
+                            } else if(field[i][count].getValue() < field[i][j].getValue()) {
+                                if(field[i][count].getValue() == 0) {
+                                    int value = field[i][j].getValue();
+                                    field[i][j].setValue(0);
+                                    field[i][count].setValue(value);
                                 } else {
                                     count++;
-                                    int value = field[i][j];
-                                    field[i][j] = 0;
-                                    field[i][count] = value;
+                                    int value = field[i][j].getValue();
+                                    field[i][j].setValue(0);
+                                    field[i][count].setValue(value);
                                 }
-                            } else if(field[i][count] > field[i][j]) {
+                            } else if(field[i][count].getValue() > field[i][j].getValue()) {
                                 count++;
-                                int value = field[i][j];
-                                field[i][j] = 0;
-                                field[i][count] = value;
+                                int value = field[i][j].getValue();
+                                field[i][j].setValue(0);
+                                field[i][count].setValue(value);
                             }
                         }
                     }
@@ -256,6 +256,8 @@ public class Controller {
 
         this.field.newCell();
     }
+
+
 
     public void logicMove(int start_x, int start_y, int end_x, int end_y) {
         int side1 = (start_x - end_x);

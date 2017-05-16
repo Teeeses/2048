@@ -16,6 +16,7 @@ public class App extends Application {
     private static float widthScreen;
     private static float heightScreen;
     private static int sizeSurface;
+    private static int lenght;
     private static Surface surface;
 
     private static Controller controller;
@@ -73,5 +74,13 @@ public class App extends Application {
 
     public static void setLevel(Level level) {
         App.level = level;
+    }
+
+    public static int getLenght() {
+        return lenght;
+    }
+
+    public static void setLenght(int lenght) {
+        App.lenght = lenght;
     }
 }
