@@ -40,7 +40,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback {
 
 
     protected void onDraw(Canvas canvas) {
-            ((Controller)App.getController()).onDraw(canvas);
+            //((Controller)App.getController()).onDraw(canvas);
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {

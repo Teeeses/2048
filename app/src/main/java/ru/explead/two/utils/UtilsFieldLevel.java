@@ -28,5 +28,18 @@ public class UtilsFieldLevel {
             Field field = new Field(mass);
             App.getController().setField(field);
         }
+
+        if (level == 2) {
+            App.setLenght(5);
+            Cell[][] mass = new Cell[][]{
+                    {new Cell(1), new Cell(1), new Cell(0), new Cell(1), new Cell(1)},
+                    {new Cell(1), new Cell(1), new Cell(0), new Cell(1), new Cell(1)},
+                    {new Cell(0), new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
+                    {new Cell(1), new Cell(1), new Cell(0), new Cell(1), new Cell(1)},
+                    {new Cell(1), new Cell(1), new Cell(0), new Cell(1), new Cell(1)}
+            };
+            Field field = new Field(mass);
+            App.getController().setField(field);
+        }
     }
 }

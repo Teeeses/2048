@@ -1,7 +1,6 @@
 package ru.explead.two;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
@@ -10,10 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
+import org.androidannotations.annotations.EActivity;
+
 import ru.explead.two.app.App;
-import ru.explead.two.fragments.GameFragment;
+import ru.explead.two.fragments.GameFragment_;
+import ru.explead.two.fragments.StartFragment_;
 import ru.explead.two.utils.Utils;
 
+@EActivity
 public class MainActivity extends AppCompatActivity {
 
 
@@ -28,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         activity = this;
         res = this.getResources();
         sPref = getSharedPreferences(Utils.APP_PREFERENCES, MODE_PRIVATE);
@@ -37,13 +39,24 @@ public class MainActivity extends AppCompatActivity {
         App.setWidthScreen(displaymetrics.widthPixels);
         App.setHeightScreen(displaymetrics.heightPixels);
 
-        openGameFragment();
+        openStartFragment();
     }
 
-    public void openGameFragment() {
+    public void openStartFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        fragment = new GameFragment();
+        fragment = new StartFragment_();
         transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.commit();
+    }
+
+    public void openGameFragment(int page) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        fragment = new GameFragment_();
+        Bundle args = new Bundle();
+        args.putInt("page", page);
+        fragment.setArguments(args);
+        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 

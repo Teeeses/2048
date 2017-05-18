@@ -13,6 +13,7 @@
     <dimen name="more_standard_text">25sp</dimen>
     <dimen name="big_text">35sp</dimen>
     <dimen name="more_big_text">45sp</dimen>
+    <dimen name="gigant_text">60sp</dimen>
 
 
     <dimen name="height_line">2dp</dimen>

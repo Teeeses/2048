@@ -1,6 +1,7 @@
 package ru.explead.two.logic;
 
 import android.content.Context;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
@@ -49,6 +50,10 @@ public class Cell {
             view.setText(Integer.toString(value));
         }
         view.setTextSize(28);
+
+        if(value == 1) {
+            layout.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void update() {
@@ -66,7 +71,7 @@ public class Cell {
 
     public void animationNewCell() {
         if(value >= 2) {
-            Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale);
+            Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale_appear);
             view.startAnimation(anim);
         }
     }
@@ -81,6 +86,7 @@ public class Cell {
 
     public void setValue(int value) {
         this.value = value;
+        update();
     }
 
     public int getX() {

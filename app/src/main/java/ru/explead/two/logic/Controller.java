@@ -3,8 +3,7 @@ package ru.explead.two.logic;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import java.util.ArrayList;
-
+import ru.explead.two.ActionsCallback;
 import ru.explead.two.MainActivity;
 import ru.explead.two.app.App;
 import ru.explead.two.fragments.GameFragment;
@@ -17,11 +16,6 @@ import ru.explead.two.utils.UtilsFieldLevel;
 
 public class Controller {
 
-    /**
-     * левый нижний угол - (0, *), координаты.
-     */
-    public static int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3, NO_ACTIVE = -1;
-
     public static int ACTIVE_GAME = 1, FINISH = 2;
     protected int status;
 
@@ -29,12 +23,13 @@ public class Controller {
     protected Field field;
 
     private int score;
+    private int defultMinScore = 16;
 
-    protected Paint paintWall = new Paint();
+    private ActionsCallback actionCallback;
 
 
-    public Controller() {
-
+    public Controller(ActionsCallback actionCallback) {
+        this.actionCallback = actionCallback;
     }
 
 
@@ -45,22 +40,70 @@ public class Controller {
         UtilsFieldLevel.getDataLevel(level.getLevel());
     }
 
-    public void onDraw(Canvas canvas) {
-
-    }
-
-    public void createPaint() {
-        paintWall.setColor(MainActivity.getRes().getColor(android.R.color.darker_gray));
-        paintWall.setAntiAlias(true);
+    public void action(int start_x, int start_y, int end_x, int end_y) {
+        if(status == ACTIVE_GAME) {
+            logicMove(start_x, start_y, end_x, end_y);
+            this.field.newCell();
+            actionCallback.onMove();
+            actionCallback.onScore(score());
+            int roundScore = checkRoundScore();
+            if (roundScore != 0) {
+                actionCallback.onRoundScore(roundScore);
+            }
+            if (isGameOver()) {
+                actionCallback.onGameOver();
+            }
+        }
     }
 
     /**
      * Проверяем закончилась игра или нет
-     * @return - true - если кубики на своих местах
+     * @return - true - если проиграли
      */
-    private boolean checkGameOver() {
-
+    private boolean isGameOver() {
+        for(int i = 0; i < field.getSize()-1; i++) {
+            for(int j = 0; j < field.getSize()-1; j++) {
+                int current = field.getValue(i, j);
+                int down = field.getValue(i+1, j);
+                int right = field.getValue(i, j+1);
+                if(current == 0 || down == 0 || right == 0) {
+                    return false;
+                }
+                if(current != 1 && down != 1 && current == down) {
+                    return false;
+                }
+                if(current != 1 && right != 1 && current == right) {
+                    return false;
+                }
+            }
+        }
+        status = FINISH;
         return true;
+    }
+
+    public int checkRoundScore() {
+        int count = max() / defultMinScore;
+        if(count >= 1) {
+            int defult = defultMinScore;
+            for(int i = 0; i < count; i++) {
+                defultMinScore = defultMinScore * 2;
+            }
+            return defult;
+        }
+        return 0;
+    }
+
+    public int max() {
+        int max = 0;
+        for(int i = 0; i < field.getSize(); i++) {
+            for (int j = 0; j < field.getSize(); j++) {
+                int currentValue = field.getValue(i, j);
+                if(currentValue > max) {
+                    max = currentValue;
+                }
+            }
+        }
+        return max;
     }
 
     /**
@@ -68,8 +111,8 @@ public class Controller {
      */
     public void onTick() {
         if(status == ACTIVE_GAME) {
-            if(checkGameOver()) {
-                ((GameFragment) MainActivity.getFragment()).onWin();
+            if(isGameOver()) {
+                //((GameFragment) MainActivity.getFragment()).onWin();
             }
         }
     }
@@ -136,8 +179,6 @@ public class Controller {
                 }
             }
         }
-
-        this.field.newCell();
     }
 
     public void onMoveDown() {
@@ -175,8 +216,6 @@ public class Controller {
                 }
             }
         }
-
-        this.field.newCell();
     }
 
     public void onMoveRight() {
@@ -214,8 +253,6 @@ public class Controller {
                 }
             }
         }
-
-        this.field.newCell();
     }
 
     public void onMoveLeft() {
@@ -253,8 +290,6 @@ public class Controller {
                 }
             }
         }
-
-        this.field.newCell();
     }
 
 

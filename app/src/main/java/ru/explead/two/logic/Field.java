@@ -1,6 +1,7 @@
 package ru.explead.two.logic;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import ru.explead.two.app.App;
@@ -19,10 +20,11 @@ public class Field {
 
     private Cell[][] field;
 
-    public Field(Cell[][] emptyField) {
-        this.field = emptyField;
-        widthCell = App.getSizeSurface()/ emptyField.length;
+    public Field(Cell[][] field) {
+        this.field = field;
+        widthCell = App.getSizeSurface()/ field.length;
 
+        this.field = field;
         newCell();
         newCell();
     }
@@ -30,18 +32,28 @@ public class Field {
     /* Заполнить случайную ячейку числом 2 */
     public void newCell()
     {
-        Random rand = new Random();
-        int i, j;
-        do
-        {
-            i = rand.nextInt(field.length);
-            j = rand.nextInt(field.length);
-        } while (field[i][j].getValue() != 0);
+        ArrayList<Coordinate> coordinates = isExistEmptyCells();
+        if(coordinates.size() > 0) {
+            Random rand = new Random();
+            Coordinate coordinate = coordinates.get(rand.nextInt(coordinates.size()));
 
-        field[i][j].setValue(2);
-        field[i][j].animationNewCell();
+            field[coordinate.getX()][coordinate.getY()].setValue(2);
+            field[coordinate.getX()][coordinate.getY()].animationNewCell();
+        }
     }
 
+    public ArrayList<Coordinate> isExistEmptyCells() {
+
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
+        for(int i = 0; i < getSize(); i++) {
+            for(int j = 0; j < getSize(); j++) {
+                if(field[i][j].getValue() == 0) {
+                    coordinates.add(new Coordinate(i, j));
+                }
+            }
+        }
+        return coordinates;
+    }
 
     public Cell getCell(int x, int y) {
         return field[x][y];

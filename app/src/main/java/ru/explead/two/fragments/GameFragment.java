@@ -1,60 +1,72 @@
 package ru.explead.two.fragments;
 
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
+
+import ru.explead.two.ActionsCallback;
 import ru.explead.two.R;
-import ru.explead.two.Surface;
 import ru.explead.two.app.App;
 import ru.explead.two.logic.Cell;
 import ru.explead.two.logic.Controller;
 import ru.explead.two.logic.Level;
-import ru.explead.two.utils.Utils;
 
 /**
  * Created by develop on 15.12.2016.
  */
-public class GameFragment extends Fragment {
+
+@EFragment
+public class GameFragment extends Fragment implements ActionsCallback {
 
     private int start_x, start_y, end_x, end_y;
-    private long startTouch = 0l, endTouch = 0l;
+
+    @ViewById
+    RelativeLayout rootLayout;
+
+    @ViewById
+    TextView tvScore;
 
     private LinearLayout field;
-    private Surface surface;
 
-    private Cell[][] cells;
     private int widthField;
+
+    private Controller controller;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
 
-        RelativeLayout rootLayout = (RelativeLayout) view.findViewById(R.id.rootLayout);
+        int level = getArguments().getInt("page", 0);
+        App.setLevel(new Level(level));
 
         onTouch(view);
 
-        App.setLevel(new Level(1));
+        return view;
+    }
 
+    @AfterViews
+    public void create() {
         createField(rootLayout);
         startGame();
         createTable();
+    }
 
-        return view;
+    public void startGame() {
+        controller = new Controller(this);
+        App.setController(controller);
+        controller.startGame();
     }
 
     private void createField(RelativeLayout rootLayout) {
@@ -64,7 +76,6 @@ public class GameFragment extends Fragment {
         params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
         field.setLayoutParams(params);
         field.setOrientation(LinearLayout.VERTICAL);
-        field.setBackgroundColor(getContext().getResources().getColor(R.color.main));
         int margin = getContext().getResources().getDimensionPixelSize(R.dimen.radius);
         field.setPadding(margin, margin, margin, margin);
 
@@ -76,7 +87,6 @@ public class GameFragment extends Fragment {
         field.removeAllViews();
         int number = App.getController().getField().getSize();
         int size = (widthField - 2*getContext().getResources().getDimensionPixelSize(R.dimen.radius))/number;
-        LayoutInflater inflater = getActivity().getLayoutInflater();
 
         for(int i = 0; i < number; i++) {
             LinearLayout lay = new LinearLayout(getActivity());
@@ -85,19 +95,11 @@ public class GameFragment extends Fragment {
             lay.setLayoutParams(params);
             for(int j = 0; j < number; j++) {
                 Cell[][] cells = App.getController().getField().getField();
-                //cells[i][j].createCell();
                 lay.addView(cells[i][j].getLayout());
             }
             field.addView(lay);
         }
     }
-
-    public void startGame() {
-        Controller controller = new Controller();
-        App.setController(controller);
-        controller.startGame();
-    }
-
 
     public void onTouch(View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -112,8 +114,7 @@ public class GameFragment extends Fragment {
                         case MotionEvent.ACTION_UP:
                             end_x = (int) event.getX();
                             end_y = (int) event.getY();
-                            (App.getController()).logicMove(start_x, start_y, end_x, end_y);
-                            move();
+                            controller.action(start_x, start_y, end_x, end_y);
                             break;
                         default:
                             break;
@@ -125,7 +126,8 @@ public class GameFragment extends Fragment {
         });
     }
 
-    public void move() {
+    @Override
+    public void onMove() {
         Cell[][] cells = App.getController().getField().getField();
         for(int i = 0; i < cells.length; i++) {
             for(int j = 0; j < cells.length; j++) {
@@ -133,25 +135,29 @@ public class GameFragment extends Fragment {
             }
         }
 
-        System.out.println("\n*******************************");
+        /*System.out.println("\n*******************************");
         for(int i = 0; i < cells.length; i++) {
             System.out.println();
             for(int j = 0; j < cells.length; j++) {
                 cells[i][j].update();
                 System.out.print(Integer.toString(cells[i][j].getValue()) + " ");
             }
-        }
+        }*/
     }
 
-    public void onWin() {
-        Log.d("TAG", "WIN");
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getActivity(), "Победа", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onGameOver() {
+        Toast.makeText(getContext(), "Конец игры!", Toast.LENGTH_SHORT).show();
+    }
 
-            }
-        });
+    @Override
+    public void onScore(int score) {
+        tvScore.setText(Integer.toString(score));
+    }
+
+    @Override
+    public void onRoundScore(int score) {
+        Toast.makeText(getContext(), "Круглое чилос - " + Integer.toString(score), Toast.LENGTH_SHORT).show();
     }
 
     @Override
