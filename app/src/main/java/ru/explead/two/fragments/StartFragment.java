@@ -3,21 +3,19 @@ package ru.explead.two.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 
 import ru.explead.two.MainActivity;
 import ru.explead.two.R;
-
-/**
- * Created by develop on 18.05.2017.
- */
 
 @EFragment
 public class StartFragment extends Fragment {
@@ -30,6 +28,12 @@ public class StartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
 
         TextView tvLevelText = (TextView) view.findViewById(R.id.tvLevelText);
+
+        PageAdapter mAdapter = new PageAdapter(getFragmentManager());
+
+        ViewPager pager = (ViewPager) view.findViewById(R.id.container);
+        pager.setAdapter(mAdapter);
+        pager.setPageTransformer(true, new RotateUpTransformer());
 
         return view;
     }

@@ -2,14 +2,14 @@ package ru.explead.two.utils;
 
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.view.View;
 
 import ru.explead.two.MainActivity;
 import ru.explead.two.R;
 import ru.explead.two.app.App;
 
-/**
- * Created by develop on 16.12.2016.
- */
+
 public class Utils {
 
 
@@ -20,7 +20,8 @@ public class Utils {
         return Typeface.createFromAsset(LevelsActivity.getActivity().getAssets(),"fonts/level_personal.ttf");
     }*/
 
-    public static int getColor(int value) {
+    public static GradientDrawable getColor(View view, int value) {
+        GradientDrawable bgShape = (GradientDrawable)view.getBackground();
         Resources res = MainActivity.getActivity().getResources();
         int color = res.getColor(R.color.empty_cell);
         if(value == 0) {
@@ -38,7 +39,8 @@ public class Utils {
         } else if(value == 32) {
             color = res.getColor(R.color.thirty_two_cell);
         }
-        return color;
+        bgShape.setColor(color);
+        return bgShape;
     }
 
     public static int getColorText(int value) {

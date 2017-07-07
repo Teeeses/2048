@@ -5,9 +5,6 @@ import ru.explead.two.app.App;
 import ru.explead.two.logic.Cell;
 import ru.explead.two.logic.Field;
 
-/**
- * Created by develop on 20.01.2017.
- */
 
 public class UtilsFieldLevel {
 

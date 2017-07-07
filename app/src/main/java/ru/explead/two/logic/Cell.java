@@ -12,9 +12,6 @@ import ru.explead.two.R;
 import ru.explead.two.app.App;
 import ru.explead.two.utils.Utils;
 
-/**
- * Created by Александр on 13.05.2017.
- */
 
 public class Cell {
 
@@ -44,7 +41,7 @@ public class Cell {
 
         view = (TextView) layout.findViewById(R.id.cell);
         view.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.standard_text));
-        view.setBackgroundColor(Utils.getColor(value));
+        view.setBackgroundDrawable(Utils.getColor(view, value));
         view.setTextColor(Utils.getColorText(value));
         if(value != 0) {
             view.setText(Integer.toString(value));
@@ -57,7 +54,7 @@ public class Cell {
     }
 
     public void update() {
-        view.setBackgroundColor(Utils.getColor(value));
+        view.setBackgroundDrawable(Utils.getColor(view, value));
         view.setTextColor(Utils.getColorText(value));
         if(value != 0) {
             view.setText(Integer.toString(value));

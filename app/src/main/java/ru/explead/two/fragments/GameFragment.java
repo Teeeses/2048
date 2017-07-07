@@ -23,9 +23,6 @@ import ru.explead.two.logic.Cell;
 import ru.explead.two.logic.Controller;
 import ru.explead.two.logic.Level;
 
-/**
- * Created by develop on 15.12.2016.
- */
 
 @EFragment
 public class GameFragment extends Fragment implements ActionsCallback {

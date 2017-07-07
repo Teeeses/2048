@@ -6,9 +6,6 @@ import java.util.Random;
 
 import ru.explead.two.app.App;
 
-/**
- * Created by develop on 20.01.2017.
- */
 
 public class Field {
 
