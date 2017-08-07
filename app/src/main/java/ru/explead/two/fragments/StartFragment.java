@@ -3,21 +3,18 @@ package ru.explead.two.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
 
 import ru.explead.two.MainActivity;
 import ru.explead.two.R;
 
-@EFragment
 public class StartFragment extends Fragment {
 
     private int maxPage = 2;
@@ -29,28 +26,31 @@ public class StartFragment extends Fragment {
 
         TextView tvLevelText = (TextView) view.findViewById(R.id.tvLevelText);
 
-        PageAdapter mAdapter = new PageAdapter(getFragmentManager());
+        ImageView arrowLeft = (ImageView) view.findViewById(R.id.arrowLeft);
+        arrowLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changePage(false);
+            }
+        });
 
-        ViewPager pager = (ViewPager) view.findViewById(R.id.container);
-        pager.setAdapter(mAdapter);
-        pager.setPageTransformer(true, new RotateUpTransformer());
+        ImageView arrowRight = (ImageView) view.findViewById(R.id.arrowRight);
+        arrowRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changePage(false);
+            }
+        });
+
+        ImageView btnPlay = (ImageView) view.findViewById(R.id.btnPlay);
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).openGameFragment(page);
+            }
+        });
 
         return view;
-    }
-
-    @Click(R.id.arrowLeft)
-    public void clickArrowLeft() {
-        changePage(false);
-    }
-
-    @Click(R.id.arrowRight)
-    public void clickArrowRight() {
-        changePage(true);
-    }
-
-    @Click(R.id.btnPlay)
-    public void clickPlay() {
-        ((MainActivity)getActivity()).openGameFragment(page);
     }
 
     private void changePage(boolean direction) {

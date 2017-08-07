@@ -7,14 +7,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
 
 import ru.explead.two.ActionsCallback;
 import ru.explead.two.R;
@@ -22,80 +17,43 @@ import ru.explead.two.app.App;
 import ru.explead.two.logic.Cell;
 import ru.explead.two.logic.Controller;
 import ru.explead.two.logic.Level;
+import ru.explead.two.views.FieldView;
 
 
-@EFragment
 public class GameFragment extends Fragment implements ActionsCallback {
 
     private int start_x, start_y, end_x, end_y;
 
-    @ViewById
-    RelativeLayout rootLayout;
-
-    @ViewById
-    TextView tvScore;
-
-    private LinearLayout field;
-
-    private int widthField;
+    private TextView tvScore;
 
     private Controller controller;
+    private FieldView fieldView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
 
+        tvScore = (TextView) view.findViewById(R.id.tvScore);
+
         int level = getArguments().getInt("page", 0);
         App.setLevel(new Level(level));
 
+        controller = new Controller(this);
+        App.setController(controller);
+        controller.startGame();
+
+
+        createField(view);
         onTouch(view);
 
         return view;
     }
 
-    @AfterViews
-    public void create() {
-        createField(rootLayout);
-        startGame();
-        createTable();
-    }
 
-    public void startGame() {
-        controller = new Controller(this);
-        App.setController(controller);
-        controller.startGame();
-    }
-
-    private void createField(RelativeLayout rootLayout) {
-        field = new LinearLayout(getActivity());
-        widthField = (int) App.getWidthScreen() - 30;
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(widthField, widthField);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        field.setLayoutParams(params);
-        field.setOrientation(LinearLayout.VERTICAL);
-        int margin = getContext().getResources().getDimensionPixelSize(R.dimen.radius);
-        field.setPadding(margin, margin, margin, margin);
-
-        rootLayout.addView(field);
-    }
-
-
-    public void createTable() {
-        field.removeAllViews();
-        int number = App.getController().getField().getSize();
-        int size = (widthField - 2*getContext().getResources().getDimensionPixelSize(R.dimen.radius))/number;
-
-        for(int i = 0; i < number; i++) {
-            LinearLayout lay = new LinearLayout(getActivity());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size);
-            lay.setOrientation(LinearLayout.HORIZONTAL);
-            lay.setLayoutParams(params);
-            for(int j = 0; j < number; j++) {
-                Cell[][] cells = App.getController().getField().getField();
-                lay.addView(cells[i][j].getLayout());
-            }
-            field.addView(lay);
-        }
+    private void createField(View view) {
+        fieldView = (FieldView) view.findViewById(R.id.fieldView);
+        fieldView.setField(controller.getField(), (int) App.getWidthScreen() - 30);
+        fieldView.createEmptyCells();
     }
 
     public void onTouch(View view) {
@@ -154,7 +112,7 @@ public class GameFragment extends Fragment implements ActionsCallback {
 
     @Override
     public void onRoundScore(int score) {
-        Toast.makeText(getContext(), "Круглое чилос - " + Integer.toString(score), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Круглое число - " + Integer.toString(score), Toast.LENGTH_SHORT).show();
     }
 
     @Override

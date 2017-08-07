@@ -18,4 +18,10 @@
         android:gravity="center_horizontal"
         android:text="0"/>
 
+    <ru.explead.two.views.FieldView
+        android:id="@+id/fieldView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"/>
+
 </RelativeLayout>

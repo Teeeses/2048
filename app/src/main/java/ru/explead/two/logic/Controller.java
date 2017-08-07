@@ -17,10 +17,10 @@ import ru.explead.two.utils.UtilsFieldLevel;
 public class Controller {
 
     public static int ACTIVE_GAME = 1, FINISH = 2;
-    protected int status;
+    private int status;
 
-    protected Level level;
-    protected Field field;
+    private Level level;
+    private Field field;
 
     private int score;
     private int defultMinScore = 16;
