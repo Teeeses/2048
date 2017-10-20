@@ -17,7 +17,7 @@ import ru.explead.two.R;
 
 public class StartFragment extends Fragment {
 
-    private int maxPage = 2;
+    private int maxPage = 3;
     private int page = 1;
 
     @Override

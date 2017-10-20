@@ -14,7 +14,6 @@ import android.widget.Toast;
 import ru.explead.two.ActionsCallback;
 import ru.explead.two.R;
 import ru.explead.two.app.App;
-import ru.explead.two.logic.Cell;
 import ru.explead.two.logic.Controller;
 import ru.explead.two.logic.Level;
 import ru.explead.two.views.FieldView;
@@ -52,8 +51,7 @@ public class GameFragment extends Fragment implements ActionsCallback {
 
     private void createField(View view) {
         fieldView = (FieldView) view.findViewById(R.id.fieldView);
-        fieldView.setField(controller.getField(), (int) App.getWidthScreen() - 30);
-        fieldView.createEmptyCells();
+        fieldView.setField(controller.getField(), (int)App.getWidthScreen() - 30);
     }
 
     public void onTouch(View view) {
@@ -83,12 +81,7 @@ public class GameFragment extends Fragment implements ActionsCallback {
 
     @Override
     public void onMove() {
-        Cell[][] cells = App.getController().getField().getField();
-        for(int i = 0; i < cells.length; i++) {
-            for(int j = 0; j < cells.length; j++) {
-                cells[i][j].update();
-            }
-        }
+        fieldView.update();
 
         /*System.out.println("\n*******************************");
         for(int i = 0; i < cells.length; i++) {

@@ -1,7 +1,6 @@
 package ru.explead.two.utils;
 
 
-import ru.explead.two.app.App;
 import ru.explead.two.logic.Cell;
 import ru.explead.two.logic.Field;
 
@@ -9,25 +8,19 @@ import ru.explead.two.logic.Field;
 public class UtilsFieldLevel {
 
 
-    public static void getDataLevel(int level) {
-        getLevelFromEasy(level);
-    }
-
-    private static void getLevelFromEasy(int level) {
+    public static Field getData(int level) {
+        Field field = null;
         if (level == 1) {
-            App.setLenght(4);
             Cell[][] mass = new Cell[][]{
                     {new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
                     {new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
                     {new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
                     {new Cell(0), new Cell(0), new Cell(0), new Cell(0)}
             };
-            Field field = new Field(mass);
-            App.getController().setField(field);
+            field = new Field(mass);
         }
 
         if (level == 2) {
-            App.setLenght(5);
             Cell[][] mass = new Cell[][]{
                     {new Cell(1), new Cell(1), new Cell(0), new Cell(1), new Cell(1)},
                     {new Cell(1), new Cell(1), new Cell(0), new Cell(1), new Cell(1)},
@@ -35,8 +28,19 @@ public class UtilsFieldLevel {
                     {new Cell(1), new Cell(1), new Cell(0), new Cell(1), new Cell(1)},
                     {new Cell(1), new Cell(1), new Cell(0), new Cell(1), new Cell(1)}
             };
-            Field field = new Field(mass);
-            App.getController().setField(field);
+            field = new Field(mass);
         }
+
+        if (level == 3) {
+            Cell[][] mass = new Cell[][]{
+                    {new Cell(0), new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
+                    {new Cell(0), new Cell(1), new Cell(0), new Cell(1), new Cell(0)},
+                    {new Cell(0), new Cell(0), new Cell(0), new Cell(0), new Cell(0)},
+                    {new Cell(0), new Cell(1), new Cell(0), new Cell(1), new Cell(0)},
+                    {new Cell(0), new Cell(0), new Cell(0), new Cell(0), new Cell(0)}
+            };
+            field = new Field(mass);
+        }
+        return field;
     }
 }

@@ -1,20 +1,25 @@
 package ru.explead.two.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.LayoutInflater;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import java.util.Locale;
+
+import ru.explead.two.R;
 import ru.explead.two.logic.Cell;
+import ru.explead.two.utils.Utils;
 
 /**
  * Created by develop on 07.08.2017.
  */
 
-public class CellView extends View {
+public class CellView extends RelativeLayout {
 
     private Context context;
     private Cell cell;
@@ -22,9 +27,10 @@ public class CellView extends View {
     private float globalX;
     private float globalY;
 
-    public CellView(Context context, int size) {
+    private TextView textView;
+
+    public CellView(Context context) {
         super(context);
-        this.size = size;
         init(context);
     }
 
@@ -42,17 +48,42 @@ public class CellView extends View {
         this.context = context;
     }
 
-    public void create(Cell cell) {
+    public void create(Cell cell, int size) {
         this.cell = cell;
+        this.size = size;
 
-        RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(size, size);
-        this.setLayoutParams(param);
-        this.setBackgroundColor(Color.GRAY);
+
+        textView = (TextView) LayoutInflater.from(context).inflate(R.layout.cell, null, false);
+        textView.setLayoutParams(new RelativeLayout.LayoutParams(size, size));
+        update();
 
         globalX = size*cell.getX();
         globalY = size*cell.getY();
 
         this.setX(globalX);
         this.setY(globalY);
+
+        this.addView(textView);
+    }
+
+    public void update() {
+        textView.setBackgroundColor(Utils.getColor(textView, cell.getValue()));
+        textView.setTextColor(Utils.getColorText(cell.getValue()));
+        setText();
+    }
+
+    public void animationNewCell() {
+        if(cell.getValue() >= 2) {
+            Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale_appear);
+            textView.startAnimation(anim);
+        }
+    }
+
+    public void setText() {
+        if(cell.getValue() == 1) {
+            textView.setText("");
+        } else if(cell.getValue() != 0) {
+            textView.setText(String.format(Locale.ROOT, "%d", cell.getValue()));
+        }
     }
 }

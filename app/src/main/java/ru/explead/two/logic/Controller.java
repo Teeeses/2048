@@ -1,12 +1,7 @@
 package ru.explead.two.logic;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-
 import ru.explead.two.ActionsCallback;
-import ru.explead.two.MainActivity;
 import ru.explead.two.app.App;
-import ru.explead.two.fragments.GameFragment;
 import ru.explead.two.utils.UtilsFieldLevel;
 
 
@@ -22,8 +17,8 @@ public class Controller {
     private Level level;
     private Field field;
 
-    private int score;
-    private int defultMinScore = 16;
+    private int score = 0;
+    private int defultMinScore = 1024;
 
     private ActionsCallback actionCallback;
 
@@ -35,9 +30,8 @@ public class Controller {
 
     public void startGame() {
         status = ACTIVE_GAME;
-        score = 0;
         level = App.getLevel();
-        UtilsFieldLevel.getDataLevel(level.getLevel());
+        field = UtilsFieldLevel.getData(level.getLevel());
     }
 
     public void action(int start_x, int start_y, int end_x, int end_y) {
@@ -105,31 +99,6 @@ public class Controller {
         }
         return max;
     }
-
-    /**
-     * Каждый тик потока отрисовки
-     */
-    public void onTick() {
-        if(status == ACTIVE_GAME) {
-            if(isGameOver()) {
-                //((GameFragment) MainActivity.getFragment()).onWin();
-            }
-        }
-    }
-
-    /**
-     * Проверка двигается ли какой из кубиков в данный момент
-     * @return - false - если двигается
-     */
-    /*public boolean checkNoActiveMove() {
-        for(int i = 0; i < cube.size(); i++) {
-            if(cube.get(i).getStatus() != NO_ACTIVE) {
-                return false;
-            }
-        }
-        return true;
-    }*/
-
 
     public int score() {
         int score = 0;

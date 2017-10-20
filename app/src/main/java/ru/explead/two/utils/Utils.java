@@ -1,6 +1,7 @@
 package ru.explead.two.utils;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
@@ -20,14 +21,13 @@ public class Utils {
         return Typeface.createFromAsset(LevelsActivity.getActivity().getAssets(),"fonts/level_personal.ttf");
     }*/
 
-    public static GradientDrawable getColor(View view, int value) {
-        GradientDrawable bgShape = (GradientDrawable)view.getBackground();
+    public static int getColor(View view, int value) {
         Resources res = MainActivity.getActivity().getResources();
-        int color = res.getColor(R.color.empty_cell);
+        int color = res.getColor(R.color.white);
         if(value == 0) {
-            color = res.getColor(R.color.empty_cell);
+            color = res.getColor(R.color.white);
         } else if(value == 1) {
-            color = res.getColor(R.color.empty_cell);
+            color = res.getColor(R.color.black);
         } else if(value == 2) {
             color = res.getColor(R.color.two_cell);
         } else if(value == 4) {
@@ -39,8 +39,7 @@ public class Utils {
         } else if(value == 32) {
             color = res.getColor(R.color.thirty_two_cell);
         }
-        bgShape.setColor(color);
-        return bgShape;
+        return color;
     }
 
     public static int getColorText(int value) {

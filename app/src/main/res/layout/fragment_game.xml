@@ -3,15 +3,19 @@
               android:orientation="vertical"
               android:id="@+id/rootLayout"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:background="@color/black">
 
     <TextView
         android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/standard_margin"
-        android:background="@color/gray_dark"
-        android:textColor="@color/white"
+        android:paddingTop="@dimen/standard_margin"
+        android:paddingBottom="@dimen/standard_margin"
+        android:paddingRight="@dimen/big_margin"
+        android:paddingLeft="@dimen/big_margin"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:textSize="@dimen/standard_text"
         android:layout_margin="@dimen/standard_margin"
         android:layout_alignParentRight="true"
@@ -22,6 +26,7 @@
         android:id="@+id/fieldView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:background="@color/white"/>
 
 </RelativeLayout>

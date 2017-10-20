@@ -2,7 +2,6 @@ package ru.explead.two.app;
 
 import android.app.Application;
 
-import ru.explead.two.Surface;
 import ru.explead.two.logic.Controller;
 import ru.explead.two.logic.Level;
 
@@ -16,8 +15,6 @@ public class App extends Application {
     private static float widthScreen;
     private static float heightScreen;
     private static int sizeSurface;
-    private static int lenght;
-    private static Surface surface;
 
     private static Controller controller;
     private static Level level;
@@ -52,14 +49,6 @@ public class App extends Application {
         App.sizeSurface = sizeSurface;
     }
 
-    public static Surface getSurface() {
-        return surface;
-    }
-
-    public static void setSurface(Surface surface) {
-        App.surface = surface;
-    }
-
     public static Controller getController() {
         return controller;
     }
@@ -76,11 +65,4 @@ public class App extends Application {
         App.level = level;
     }
 
-    public static int getLenght() {
-        return lenght;
-    }
-
-    public static void setLenght(int lenght) {
-        App.lenght = lenght;
-    }
 }
